@@ -1,5 +1,5 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, storage, vkEmojiTransforms) {
+  'EmojiGroups', 'EmojiHex', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, emojiHex, storage, vkEmojiTransforms) {
     var RECENT_LIMIT = 54;
     var DEFAULT_OUTPUT_FORMAT = '';
     var templateUrl = 'templates/emoji-button-bootstrap.html';
@@ -22,7 +22,10 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         model: '=emojiPicker',
         placement: '@',
         title: '@',
-        onChangeFunc: '='
+        trigger: '@',
+        selectorClass: '@',
+        onChangeFunc: '=',
+        onChangeFuncParams: "="
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
@@ -59,6 +62,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         };
 
         $scope.changeGroup = function (group) {
+          // Don't let the user pick non-unicode emoji (there are 7) when output format is unicode
+          if(outputFormat == 'unicode') {
+            group.emoji = group.emoji.filter(function(value) {
+              return emojiHex.emoji.hasOwnProperty(value);
+            });
+          }
           $scope.selectedGroup = group;
 
           if ($scope.selectedGroup.name === 'recent') {
@@ -81,7 +90,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
 
         function fireOnChangeFunc() {
           if ($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
-            setTimeout($scope.onChangeFunc);
+            setTimeout($scope.onChangeFunc($scope.onChangeFuncParams));
           }
         }
       }

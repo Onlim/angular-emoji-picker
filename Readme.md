@@ -43,29 +43,38 @@ Add the `emoji-picker` attribute to an element to drop in the emoji button and p
 ```
 <textarea ng-model="message" ng-change="messageUpdated()">{{message}}</textarea>
 <span emoji-picker="message"
-      placement="right" 
+      placement="right"
       title="Emoji"
       recent-limit="10"
       output-format="unicode"
-      on-change-func="messageUpdated"></span>
+      on-change-func="messageUpdated"
+      trigger="outsideClick"
+      selector-class="fa fa-smile-o fa-2x"></span>
 ```
 
 #### Options:
 * **emoji-picker** - the bound property to which selected emoji should be added
 
 * **placement** (optional) - determines where the popover shows relative to the button element
-   
+
   `top (default), bottom, left, right, right-relative`
 * **title** (optional) - the header text shown in the popover window
 
 * **recent-limit** (optional) - the number of recently-selected emoji to show in the popover window
 
 * **output-format** (optional) - the format to add selected emoji
-  
+
   `alias (default), unicode`
 
 * **on-change-func** (optional) - a function to be called when the user selects or removes an emoji
 
+* **trigger** (optional) - the popover trigger options from uib-bootstrap
+
+  `(default click) [click || outsideClick || focus || mouseenter || none]`
+
+* **selector-class** (optional) - use this attribute if the default smiley face selector needs to be replaced
+
+  `'fa fa-smile-o fa-2x' will be applied to class of '<i>' tag inside span`
 
 ### Angular Strap
 ```html
@@ -112,7 +121,7 @@ Also Emoji Picker provides a couple handy directives:
 
 1. The picker requires AngularJS 1.3 as a minimal dependency. Didn't test on 1.4 versions, probably it's broken.
 2. Angular-UI-Bootstrap is supported partially.
-You have to use version >=0.13, which has not been released yet. To get the `master` branch with bower, run: 
+You have to use version >=0.13, which has not been released yet. To get the `master` branch with bower, run:
 ```
 $ bower install angular-ui-bootstrap#master
 ```

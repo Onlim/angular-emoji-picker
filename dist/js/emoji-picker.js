@@ -2,10 +2,11 @@ angular.module('templates-dist', ['templates/emoji-button-bootstrap.html', 'temp
 
 angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/emoji-button-bootstrap.html",
-    "<i class=\"emoji-picker emoji-smile\"\n" +
-    "   popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
+    "<i ng-class=\"selectorClass ? selectorClass : 'emoji-picker emoji-smile'\"\n" +
+    "   uib-popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
     "   popover-placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   popover-title=\"{{ title }}\"></i>\n" +
+    "   popover-title=\"{{ title }}\"\n" +
+    "   popover-trigger=\"{{ !trigger && 'click' || trigger }}\"></i>\n" +
     "");
 }]);
 
@@ -30,15 +31,15 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
 
 angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/emoji-popover-bootstrap.html",
+    "<div class=\"emoji-groups\">\n" +
+    "  <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
+    "     ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
+    "     ng-repeat=\"group in ::groups\"\n" +
+    "     ng-click=\"changeGroup(group)\">\n" +
+    "  </i>\n" +
+    "  <span class=\"btn-backspace\" ng-click=\"remove()\">&#x232B;</span>\n" +
+    "</div>\n" +
     "<div class=\"emoji-container\">\n" +
-    "  <div class=\"emoji-groups\">\n" +
-    "    <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
-    "       ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
-    "       ng-repeat=\"group in ::groups\"\n" +
-    "       ng-click=\"changeGroup(group)\">\n" +
-    "    </i>\n" +
-    "    <span class=\"btn-backspace\" ng-click=\"remove()\">&#x232B;</span>\n" +
-    "  </div>\n" +
     "  <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
     "     ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
     "     ng-click=\"append(emoji)\">\n" +
@@ -1325,7 +1326,7 @@ angular.module('vkEmojiPicker').constant('EmojiHex', (function () {
 })());
 
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, storage, vkEmojiTransforms) {
+  'EmojiGroups', 'EmojiHex', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, emojiHex, storage, vkEmojiTransforms) {
     var RECENT_LIMIT = 54;
     var DEFAULT_OUTPUT_FORMAT = '';
     var templateUrl = 'templates/emoji-button-bootstrap.html';
@@ -1348,7 +1349,10 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         model: '=emojiPicker',
         placement: '@',
         title: '@',
-        onChangeFunc: '='
+        trigger: '@',
+        selectorClass: '@',
+        onChangeFunc: '=',
+        onChangeFuncParams: "="
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
@@ -1385,6 +1389,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         };
 
         $scope.changeGroup = function (group) {
+          // Don't let the user pick non-unicode emoji (there are 7) when output format is unicode
+          if(outputFormat == 'unicode') {
+            group.emoji = group.emoji.filter(function(value) {
+              return emojiHex.emoji.hasOwnProperty(value);
+            });
+          }
           $scope.selectedGroup = group;
 
           if ($scope.selectedGroup.name === 'recent') {
@@ -1407,7 +1417,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
 
         function fireOnChangeFunc() {
           if ($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
-            setTimeout($scope.onChangeFunc);
+            setTimeout($scope.onChangeFunc($scope.onChangeFuncParams));
           }
         }
       }

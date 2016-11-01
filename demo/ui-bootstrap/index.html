@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../bower_components/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../dist/css/emoji-picker.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body layout="column" ng-controller="EmojiController">
 <md-toolbar layout="row">
@@ -42,8 +43,11 @@
           </div>
         </md-input-container>
         <section layout="row" layout-sm="row" layout-margin layout-align="center center">
+          <span style="margin: 0 20px;" emoji-picker="post.message" placement="auto bottom-right" title="Emoji" recent-limit="12"
+                trigger="outsideClick"></span>
           <md-button class="md-raised md-default">Post</md-button>
-          <span style="margin: 0 20px;" emoji-picker="post.message" placement="right" title="Emoji" recent-limit="12"></span>
+          <span style="margin: 0 20px;" emoji-picker="post.message" placement="auto bottom-left"
+                trigger="outsideClick" selector-class="fa fa-smile-o fa-2x" output-format="unicode"></span>
         </section>
       </form>
       <div layout="column">
@@ -68,7 +72,7 @@
 <script src="../../bower_components/angular-aria/angular-aria.min.js"></script>
 <script src="../../bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="../../bower_components/angular-material/angular-material.min.js"></script>
-<script src="../../bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="../../dist/js/emoji-picker.js"></script>
 <script src="js/app.js"></script>
 </body>
