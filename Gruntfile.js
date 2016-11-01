@@ -43,6 +43,12 @@ module.exports = function (grunt) {
           src: ['src/css/emoji-picker.css'],
           dest: 'dist/css/',
           filter: 'isFile'
+        }, {
+          expand: true,
+          flatten: true,
+          src: ['src/sass/emoji-picker.scss'],
+          dest: 'dist/sass/',
+          filter: 'isFile'
         }]
       }
     },
