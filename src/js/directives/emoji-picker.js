@@ -32,8 +32,9 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         var outputFormat = attrs.outputFormat || DEFAULT_OUTPUT_FORMAT;
 
         $scope.groups = emojiGroups.groups;
-        $scope.selectedGroup = emojiGroups.groups[0];
-        $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
+        $scope.selectedGroup = emojiGroups.groups[1];   // Selecting the smiley face group by default
+        // This next line is only if the recent group is selected by default
+        //$scope.selectedGroup.emoji = storage.getFirst(recentLimit);
 
         $scope.append = function (emoji) {
           if ($scope.model == null) {
