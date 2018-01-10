@@ -1,16 +1,17 @@
 angular.module('templates-dist', ['templates/emoji-button-bootstrap.html', 'templates/emoji-button-strap.html', 'templates/emoji-button.html', 'templates/emoji-popover-bootstrap.html', 'templates/emoji-popover-strap.html', 'templates/emoji-popover.html']);
 
-angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button-bootstrap.html",
-    "<i ng-class=\"selectorClass ? selectorClass : 'emoji-picker emoji-smile'\"\n" +
-    "   uib-popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
-    "   popover-placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   popover-title=\"{{ title }}\"\n" +
-    "   popover-trigger=\"{{ !trigger && 'click' || trigger }}\"></i>\n" +
+    "<span uib-popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
+    "  popover-placement=\"{{ !placement && 'left' || placement }}\"\n" +
+    "  popover-title=\"{{ title }}\"\n" +
+    "  popover-trigger=\"{{ !trigger && 'click' || trigger }}\">\n" +
+    "  <i ng-class=\"selectorClass ? selectorClass : 'emoji-picker emoji-smile'\"></i>\n" +
+    "</span>\n" +
     "");
 }]);
 
-angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button-strap.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   bs-popover\n" +
@@ -20,7 +21,7 @@ angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", f
     "");
 }]);
 
-angular.module("templates/emoji-button.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   emoji-popover template=\"templates/emoji-popover.html\"\n" +
@@ -29,7 +30,7 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
     "");
 }]);
 
-angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover-bootstrap.html",
     "<div class=\"emoji-groups\">\n" +
     "  <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
@@ -48,7 +49,7 @@ angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCach
     "");
 }]);
 
-angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover-strap.html",
     "<div class=\"popover\" tabindex=\"-1\">\n" +
     "  <div class=\"arrow\"></div>\n" +
@@ -76,7 +77,7 @@ angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", 
     "");
 }]);
 
-angular.module("templates/emoji-popover.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover.html",
     "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
     "  <div class=\"close-button-holder\">\n" +

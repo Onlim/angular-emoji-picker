@@ -1,5 +1,6 @@
-<i ng-class="selectorClass ? selectorClass : 'emoji-picker emoji-smile'"
-   uib-popover-template="'templates/emoji-popover-bootstrap.html'"
-   popover-placement="{{ !placement && 'left' || placement }}"
-   popover-title="{{ title }}"
-   popover-trigger="{{ !trigger && 'click' || trigger }}"></i>
+<span uib-popover-template="'templates/emoji-popover-bootstrap.html'"
+  popover-placement="{{ !placement && 'left' || placement }}"
+  popover-title="{{ title }}"
+  popover-trigger="{{ !trigger && 'click' || trigger }}">
+  <i ng-class="selectorClass ? selectorClass : 'emoji-picker emoji-smile'"></i>
+</span>
