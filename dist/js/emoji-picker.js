@@ -1899,6 +1899,9 @@ angular.module('vkEmojiPicker').factory('vkEmojiTransforms', [
         } else {
           var codePoint = ['0x', hexString].join('');
           var unicode = String.fromCodePoint(codePoint);
+          if (hexString.length === 4) {
+            unicode += String.fromCodePoint(0xFE0F);
+          }
         }
 
         text = text.replace(hexString, unicode);
