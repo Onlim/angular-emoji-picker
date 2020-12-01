@@ -1,4 +1,5 @@
 AngularJS Emoji Picker
+
 ======================
 
 [![Code Climate](https://codeclimate.com/github/terranisu/angular-emoji-picker/badges/gpa.svg)](https://codeclimate.com/github/terranisu/angular-emoji-picker)
